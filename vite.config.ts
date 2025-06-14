@@ -4,7 +4,7 @@ import { assetpackPlugin } from "./scripts/assetpack-vite-plugin";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/cambium/",
+  base: "/dist/",
   plugins: [assetpackPlugin()],
   server: {
     port: 8080,
