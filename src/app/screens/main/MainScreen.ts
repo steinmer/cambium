@@ -154,7 +154,7 @@ export class MainScreen extends Container {
     if(drop === 'bowling')
     {
         this.bowlingSprite.anchor.set(0.5);
-        this.bowlingSprite.scale.set(0.5);
+        this.bowlingSprite.scale.set(0.4);
         this.addChild(this.bowlingSprite);
     }
   }
@@ -261,8 +261,8 @@ export class MainScreen extends Container {
     }
 
     this.currentScreen.position.set(
-      window.innerWidth / 2,
-      window.innerHeight / 2);
+      this.mainContainer.x,
+      this.mainContainer.y);
     this.addChild(this.currentScreen);
   }
 }

@@ -53,7 +53,7 @@ export class AirVelocityDisplay extends Container {
       fontSize: 24,
     });
     this.velocityText.anchor.set(0.5);
-    this.velocityText.position.set(0, -50);
+    this.velocityText.position.set(0, 0);
     this.addChild(this.velocityText);
 
     this.gravityText = new Text('Downward Gravity Force: 0 N', {
@@ -61,7 +61,7 @@ export class AirVelocityDisplay extends Container {
       fontSize: 24,
     });
     this.gravityText.anchor.set(0.5);
-    this.gravityText.position.set(0, 0);
+    this.gravityText.position.set(0, 50);
     this.addChild(this.gravityText);
 
     this.dragText = new Text('Upward Drag Force: 0 N', {
@@ -69,7 +69,7 @@ export class AirVelocityDisplay extends Container {
       fontSize: 24,
     });
     this.dragText.anchor.set(0.5);
-    this.dragText.position.set(0, 50);
+    this.dragText.position.set(0, 100);
     this.addChild(this.dragText);
 
     this.buoyancyText = new Text('Upward Buoyancy Force: 0 N', {
@@ -77,7 +77,7 @@ export class AirVelocityDisplay extends Container {
       fontSize: 24,
     });
     this.buoyancyText.anchor.set(0.5);
-    this.buoyancyText.position.set(0, 100);
+    this.buoyancyText.position.set(0, 150);
     this.addChild(this.buoyancyText);
 
     this.netText = new Text('Net Force: 0 N', {
@@ -85,7 +85,7 @@ export class AirVelocityDisplay extends Container {
       fontSize: 24,
     });
     this.netText.anchor.set(0.5);
-    this.netText.position.set(0, 150);
+    this.netText.position.set(0, 200);
     this.addChild(this.netText);
   }
 
