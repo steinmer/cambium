@@ -103,7 +103,7 @@ export class Navigation {
   }
 
   /** Remove screen from the stage, unlink update & resize functions */
-  private async hideAndRemoveScreen(screen: AppScreen) {
+  public async hideAndRemoveScreen(screen: AppScreen) {
     // Prevent interaction in the screen
     screen.interactiveChildren = false;
 
@@ -152,10 +152,6 @@ export class Navigation {
       this.currentScreen.onLoad(100);
     }
 
-    // If there is a screen already created, hide and destroy it
-    if (this.currentScreen) {
-      await this.hideAndRemoveScreen(this.currentScreen);
-    }
 
     // Create the new screen and add that to the stage
     this.currentScreen = BigPool.get(ctor);

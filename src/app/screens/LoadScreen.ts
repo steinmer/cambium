@@ -1,65 +1,83 @@
-import { CircularProgressBar } from "@pixi/ui";
-import { animate } from "motion";
-import type { ObjectTarget } from "motion/react";
+// This is the initial screen where you select which ball to drop
 import { Container, Sprite, Texture } from "pixi.js";
+import { storage } from "../../engine/utils/storage";
+import { engine } from "../getEngine";
+import { Button } from "../ui/Button";
+import { Label } from "../ui/Label";
+import { MainScreen } from "../screens/main/MainScreen";
 
-/** Screen shown while loading assets */
 export class LoadScreen extends Container {
-  /** Assets bundles required by this screen */
-  public static assetBundles = ["preload"];
-  /** The PixiJS logo */
-  private pixiLogo: Sprite;
-  /** Progress Bar */
-  private progressBar: CircularProgressBar;
+  public static assetBundles = ["preload", "main"];
+  public dropType = '';
+  private title: Label;
+  private basketballButton: Button;
+  private pingButton: Button;
+  private bowlingButton: Button;
 
   constructor() {
     super();
 
-    this.progressBar = new CircularProgressBar({
-      backgroundColor: "#3d3d3d",
-      fillColor: "#e72264",
-      radius: 100,
-      lineWidth: 15,
-      value: 20,
-      backgroundAlpha: 0.5,
-      fillAlpha: 0.8,
-      cap: "round",
+    // Title
+    this.title = new Label({
+      text: "Choose the item to drop!",
+      style: { fill: 0xec1561, fontSize: 50 },
     });
+    this.addChild(this.title);
 
-    this.progressBar.x += this.progressBar.width / 2;
-    this.progressBar.y += -this.progressBar.height / 2;
-
-    this.addChild(this.progressBar);
-
-    this.pixiLogo = new Sprite({
-      texture: Texture.from("logo.svg"),
-      anchor: 0.5,
-      scale: 0.2,
+    // Basketball Button
+    const basketballTexture = Texture.from('basketball.jpg');
+    this.basketballButton = new Button({ width: 300, height: 400 });
+    const basketballSprite = new Sprite(basketballTexture);
+    basketballSprite.anchor.set(0.5);
+    basketballSprite.scale.set(0.8);
+    this.basketballButton.addChild(basketballSprite);
+    this.basketballButton.onPress.connect(() => {
+      storage.setString('drop-type', 'basketball');
+      engine().navigation.hideAndRemoveScreen(this);
+      engine().navigation.showScreen(MainScreen);
     });
-    this.addChild(this.pixiLogo);
+    this.addChild(this.basketballButton);
+
+    // Ping Pong Button
+    const pingTexture = Texture.from('ping.jpg');
+    this.pingButton = new Button({ width: 300, height: 400 });
+    const pingSprite = new Sprite(pingTexture);
+    pingSprite.anchor.set(0.5);
+    this.pingButton.addChild(pingSprite);
+    this.pingButton.onPress.connect(() => {
+      storage.setString('drop-type', 'ping pong');
+      engine().navigation.hideAndRemoveScreen(this);
+      engine().navigation.showScreen(MainScreen);
+    });
+    this.addChild(this.pingButton);
+
+    // Bowling Ball Button
+    const bowlingTexture = Texture.from('bowling.jpg');
+    this.bowlingButton = new Button({ width: 300, height: 400 });
+    const bowlingSprite = new Sprite(bowlingTexture);
+    bowlingSprite.anchor.set(0.5);
+    bowlingSprite.scale.set(0.5);
+    this.bowlingButton.addChild(bowlingSprite);
+    this.bowlingButton.onPress.connect(() => {
+      storage.setString('drop-type', 'bowling');
+      engine().navigation.hideAndRemoveScreen(this);
+      engine().navigation.showScreen(MainScreen);
+    });
+    this.addChild(this.bowlingButton);
   }
 
-  public onLoad(progress: number) {
-    this.progressBar.progress = progress;
-  }
-
-  /** Resize the screen, fired whenever window size changes  */
+   /** Resize the screen, fired whenever window size changes */
   public resize(width: number, height: number) {
-    this.pixiLogo.position.set(width * 0.5, height * 0.5);
-    this.progressBar.position.set(width * 0.5, height * 0.5);
+    const centerX = width * 0.5;
+    const centerY = height * 0.5;
+    this.basketballButton.x = centerX;
+    this.basketballButton.y = centerY;
+    this.pingButton.x = centerX - 400;
+    this.pingButton.y = centerY;
+    this.bowlingButton.x = centerX + 400;
+    this.bowlingButton.y = centerY;
+    this.title.y = 100;
+    this.title.x = centerX;
   }
 
-  /** Show screen with animations */
-  public async show() {
-    this.alpha = 1;
-  }
-
-  /** Hide screen with animations */
-  public async hide() {
-    await animate(this, { alpha: 0 } as ObjectTarget<this>, {
-      duration: 0.3,
-      ease: "linear",
-      delay: 1,
-    });
-  }
 }
